@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const { spawn } = require('child_process');
 var bodyParser = require('body-parser');
-var fs=require('fs');
+var fs = require('fs');
 var output_array;
 var output_array2;
 
@@ -19,10 +19,6 @@ var app = express();
 var a;
 var b;
 var c;
-
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'hjs');
 
 var swig=require('swig');
 app.engine('html', swig.renderFile);
@@ -48,20 +44,15 @@ app.post("/userinput", function(req, res){
   fs.writeFile('userinput.txt',req.body.district+'\n'+req.body.year+'\n'+ req.body.month, function(err){
     if(err){
      console.log(err);
-   
     }
     console.log("file created");
-   
-   
     });
-   
-     
      const child = spawn('python', ['rain.py' ]);
      //  console.log(req.body.year);
      //  console.log(req.body.month);
      //  process.stdin.pipe(child.stdin);
    
-     file=fs.createReadStream('userinput.txt');
+     file = fs.createReadStream('userinput.txt');
    file.pipe(child.stdin);
    
      
@@ -73,28 +64,16 @@ app.post("/userinput", function(req, res){
     
      setTimeout(myFunction, 7000)
      function myFunction() {
-       b=b+'';
-        output_array=b.split('\n');
-   
-       // res.send(b.toString('utf8'));
-       // res.send( output_array);
-   
-       res.render('useroutput', {
+       b = b+'';
+      output_array=b.split('\n');
+
+      res.render('useroutput', {
         curr1: output_array[0],
         curr2:output_array[1],
         curr3:output_array[2],
-   
-       }
-         
-         ); 
-      
-     //    for(int i=0;i<)
-      }
-   
-   
+      }); 
     }
-
-
+  }
 );
 
 app.post("/admininput", function(req, res){
@@ -135,7 +114,6 @@ file.pipe(child2.stdin);
     // res.send( output_array);
 
     res.render('adminoutput', {
-     
       op1:output_array2[0],
       op2:output_array2[1],
       op3:output_array2[2],
@@ -143,31 +121,17 @@ file.pipe(child2.stdin);
       op5:output_array2[4],
       op6:output_array2[5],
       op7:output_array2[6],
-
-    }
-      
-      ); 
-   
-  //    for(int i=0;i<)
+    }); 
    }
-
-
- }
- );
+});
 
  app.post("/login", function(req, res){
    if(req.body.key=="123abc"){
   res.redirect('/adminmodule');
    }
    else{
-        res.send("Unauthorized User");
-
-   }
-
-
-
-
-
+    res.send("Unauthorized User");
+  }
  });
 
 // catch 404 and forward to error handler
